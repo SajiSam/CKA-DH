@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Persistentvolume
+metadata:
+  name: pvvol-1
+spec:
+  capacity:
+    storage: 1Gb
+  volumeMode: Filesystem
+  accessModes:
+    - ReadManyWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+    - rw
+  nfs:
+    path: /opt/sfw
+    server: controller

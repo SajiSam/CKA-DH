@@ -1,0 +1,22 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: << copy from certificate-authority-data in ~/.kube/config >>
+    server: https://10.140.0.10:6443 # Default for a kubeadm provisioned cluster
+  name: mycluster
+
+contexts:
+- context:
+    cluster: mycluster
+    namespace: << your surname >>
+    user: << your forename >>
+  name: << your forename >>
+
+current-context: << your forename >>
+kind: Config
+preferences: {}
+
+users:
+- name: << your forename >>
+  user:
+    token: << Output from "RETRIEVING TOKEN" script >>

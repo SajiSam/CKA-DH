@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: Production
+spec: {}
+status: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: webserver
+  name: webserver
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: webserver
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: web-server
+    spec:
+      initContainers:
+      - image: busybox
+        name: init-webserver
+        command: ['sh', '-c', 'hostname > /mnt/index.html']
+        volumemounts:
+          - name: staticcontent
+            mountPath: /mnt
+    containers:
+    - image: nginx:latest
+      name: web-Pod
+      volumeMounts:
+        - name: volume
+          mountPath: /usr/share/nginx/html
+      resources: {}
+    volumes:
+      - name: staticcontent
+        emptyDir: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: webserver
+  name: webserver
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: webserver
+  type: NodePort
+status:
+  loadBalancer: {}

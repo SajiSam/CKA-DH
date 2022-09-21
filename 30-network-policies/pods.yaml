@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: database
+  name: my-db
+spec:
+  containers:
+  - image: memcached
+    name: my-db
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: proxy
+  name: my-proxy
+spec:
+  containers:
+  - image: nginx
+    name: my-proxy
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always

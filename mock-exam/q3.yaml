@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: cka3
+  name: cka3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: cka3
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: cka3
+    spec:
+      containers:
+      - image: nginx:latest
+        name: cka3
+        volumeMounts: 
+          - name: volume
+            mountPath: /usr/share/nginx/html/
+      initContainers:
+      - image: busybox
+        name: init
+        command: ["sh", "-c", "hostname > /mnt/index.html"]
+        volumeMounts:
+         - name: volume
+           mountPath: /mnt/
+        resources: {}
+      volumes:
+        - name: volume
+          emptyDir: {}
+status: {}

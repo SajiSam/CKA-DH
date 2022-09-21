@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: website
+  name: website
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: website
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: website
+    spec:
+      containers:
+      - image: nginx
+        name: website
+        resources: {}
+status: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: website
+  name: website
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: website

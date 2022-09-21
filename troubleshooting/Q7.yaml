@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-one
+spec:
+  accessModes:
+    - ReadMany
+  volumeMode: fileSystem
+  resources:
+    requests:
+      storage: 200Mi
+  storageClassName: Fast
+#  selector:
+#    matchLabels:
+#      release: "stable"
+#    matchExpressions:
+#      - {key: environment, operator: In, values: [dev]}

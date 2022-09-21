@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: esenvs
+data:
+  bootstrap.memory_lock: |
+    true
+  ES_JAVA_OPTS: |
+    -Xms512m -Xmx512m
+  discovery.type: |
+    single-node
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: elasticsearch
+  name: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: elasticsearch
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: elasticsearch
+    spec:
+      containers:
+      - image: elasticsearch:6.4.2
+        name: elasticsearch
+        volumeMounts:
+          - mountPath: /usr/share/elasticsearchsearch/data
+            name: esdata
+        envFrom:
+        - configMapRef:
+            name: esenvs
+      volumes:
+        - hostPath:
+            path: /Users/jonwilliams/esdata
+            type: DirectoryOrCreate
+          name: esdata
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: kibana
+  name: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: kibana
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: kibana
+    spec:
+      containers:
+      - image: kibana:6.4.2
+        name: kibana
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: elasticsearch
+  name: elasticsearch
+spec:
+  ports:
+  - port: 9200
+    protocol: TCP
+    targetPort: 9200
+    name: "9200"
+  - port: 9300
+    protocol: TCP
+    targetPort: 9300
+    name: "9300"
+  selector:
+    run: elasticsearch
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: kibana
+  name: kibana
+spec:
+  ports:
+  - port: 5601
+    protocol: TCP
+    targetPort: 5601
+  selector:
+    run: kibana
+  type: LoadBalancer
+status:
+  loadBalancer: {}

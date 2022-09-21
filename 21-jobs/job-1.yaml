@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sleeper-job
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - sleep
+        - "3"
+        image: busybox
+        name: sleeper-job
+        resources: {}
+      restartPolicy: OnFailure

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: cka4
+spec: {}
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    client: user
+  name: cka4
+  namespace: cka4
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: proxy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      containers:
+      - image: nginx:1.7.9
+        name: cka4
+        resources: {}
+      restartPolicy: Always
+status: {}

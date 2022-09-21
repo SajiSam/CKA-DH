@@ -1,0 +1,5 @@
+Server:    10.96.0.10
+Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      cka3
+Address 1: 10.98.243.243 cka3.default.svc.cluster.local

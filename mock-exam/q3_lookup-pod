@@ -1,0 +1,5 @@
+Server:    10.96.0.10
+Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      10-1-0-55.default.pod.cluster.local
+Address 1: 10.1.0.55 10-1-0-55.cka3.default.svc.cluster.local

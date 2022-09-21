@@ -1,0 +1,5 @@
+Server:    10.32.0.10
+Address 1: 10.32.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      10-200-2-26.default.pod.cluster.local
+Address 1: 10.200.2.26 10-200-2-26.cka3.default.svc.cluster.local

@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  thiscourse: rocks
+  reason: because
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: ckaconfigmap

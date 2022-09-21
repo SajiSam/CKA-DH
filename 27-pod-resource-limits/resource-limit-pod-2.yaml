@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: stress
+  name: stress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stress
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: stress
+    spec:
+      containers:
+      - image: vish/stress
+        name: stress
+        resources:
+          requests:
+            memory: "100Mi"
+          limits:
+            memory: "500Mi"
+        args:
+        - -cpus
+        - "2"
+        - -mem-total
+        - "750Mi"
+        - -mem-alloc-size
+        - "100Mi"
+        - -mem-alloc-sleep
+        - "1s"
